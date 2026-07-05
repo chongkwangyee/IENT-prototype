@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sessions | Study Mesh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">SM</span>
+      <span>Study Mesh</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html">Find tutors</a>
+      <a class="active" href="sessions.html">Sessions</a>
+      <a href="notes.html">Notes</a>
+      <a href="profile.html">Profile</a>
+      <a class="login-link" href="login.html">Log in</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="page-title">
+      <div>
+        <p class="eyebrow">Session tracker</p>
+        <h1>Track your tutoring schedule</h1>
+        <p>Review when your session is happening, where it takes place, and who your tutor is.</p>
+      </div>
+      <a class="primary-button" href="booking.html">New booking</a>
+    </section>
+
+    <section class="tracker-grid" id="sessionTracker">
+      <article class="tracker-card panel">
+        <div>
+          <span class="status-chip">Confirmed</span>
+          <h2>H2 Math review</h2>
+        </div>
+        <dl>
+          <div><dt>Tutor</dt><dd>Maya Johnson</dd></div>
+          <div><dt>Schedule</dt><dd>Jul 8, 4:15 PM</dd></div>
+          <div><dt>Place</dt><dd>Library study room</dd></div>
+          <div><dt>Subject</dt><dd>Math</dd></div>
+        </dl>
+      </article>
+
+      <article class="tracker-card panel">
+        <div>
+          <span class="status-chip status-online">Online</span>
+          <h2>General Paper outline</h2>
+        </div>
+        <dl>
+          <div><dt>Tutor</dt><dd>Lina Patel</dd></div>
+          <div><dt>Schedule</dt><dd>Jul 10, 5:00 PM</dd></div>
+          <div><dt>Place</dt><dd>Online video call</dd></div>
+          <div><dt>Subject</dt><dd>English</dd></div>
+        </dl>
+      </article>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

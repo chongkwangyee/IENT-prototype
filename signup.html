@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign up | Study Mesh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-body">
+  <main class="auth-layout signup-layout">
+    <section class="auth-intro">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">SM</span>
+        <span>Study Mesh</span>
+      </a>
+      <nav class="auth-nav" aria-label="Quick navigation">
+        <a href="index.html">Tutors</a>
+        <a href="sessions.html">Sessions</a>
+        <a href="notes.html">Notes</a>
+        <a href="login.html">Log in</a>
+      </nav>
+      <h1>Create your Study Mesh profile.</h1>
+      <p>Your profile helps tutors understand your Singapore education level, learning goals, subjects, and availability.</p>
+      <div class="auth-art" aria-hidden="true">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </section>
+
+    <section class="auth-card signup-card" aria-labelledby="signupTitle">
+      <h2 id="signupTitle">Sign up</h2>
+      <p>Fill in your student details. They will appear on your profile page.</p>
+      <form id="signupForm">
+        <div class="form-grid">
+          <label>
+            Full name
+            <input id="signupName" type="text" placeholder="Alex Rivera" required>
+          </label>
+          <label>
+            Education level
+            <select id="signupGrade" required>
+              <option value="">Select level</option>
+              <option>Primary school</option>
+              <option>Secondary school</option>
+              <option>Polytechnic</option>
+              <option>Junior college</option>
+              <option>University</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          School email
+          <input id="signupEmail" type="email" placeholder="student@school.edu.sg" required>
+        </label>
+
+        <label>
+          Password
+          <input id="signupPassword" type="password" placeholder="Create password" required minlength="6">
+        </label>
+
+        <label>
+          Short bio
+          <textarea id="signupBio" rows="3" placeholder="Example: I want help with O-Level Chemistry and can tutor Primary Math." required></textarea>
+        </label>
+
+        <div class="form-grid">
+          <label>
+            Learning goals
+            <input id="signupGoals" type="text" placeholder="PSLE Science, O-Level E-Math, H2 Chemistry">
+          </label>
+          <label>
+            Can tutor
+            <input id="signupTutoring" type="text" placeholder="Primary Math, Chinese oral, beginner HTML">
+          </label>
+        </div>
+
+        <div class="form-grid">
+          <label>
+            Availability
+            <input id="signupAvailability" type="text" placeholder="Monday, Wednesday, Saturday">
+          </label>
+          <label>
+            LinkedIn profile
+            <input id="signupLinkedin" type="url" placeholder="https://www.linkedin.com/in/your-name">
+          </label>
+        </div>
+
+        <button class="primary-button wide" type="submit">Create profile</button>
+      </form>
+      <div class="switch-note">
+        Already have an account? <a href="login.html">Log in</a>
+      </div>
+      <p class="form-message" id="signupMessage" role="status"></p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

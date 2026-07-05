@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log in | Study Mesh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-body">
+  <main class="auth-layout">
+    <section class="auth-intro">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">SM</span>
+        <span>Study Mesh</span>
+      </a>
+      <nav class="auth-nav" aria-label="Quick navigation">
+        <a href="index.html">Tutors</a>
+        <a href="sessions.html">Sessions</a>
+        <a href="notes.html">Notes</a>
+        <a href="signup.html">Sign up</a>
+      </nav>
+      <h1>Join the peer tutoring mesh.</h1>
+      <p>Students can learn, tutor, earn points, and keep every session organized in one place.</p>
+      <div class="auth-art" aria-hidden="true">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </section>
+
+    <section class="auth-card" aria-labelledby="loginTitle">
+      <h2 id="loginTitle">Log in</h2>
+      <p>Use a school, polytechnic, junior college, or university email to continue.</p>
+      <form id="loginForm">
+        <label>
+          Email
+          <input type="email" placeholder="student@school.edu.sg" required>
+        </label>
+        <label>
+          Password
+          <input type="password" placeholder="Enter password" required minlength="6">
+        </label>
+        <div class="form-row">
+          <label class="check-label">
+            <input type="checkbox">
+            Remember me
+          </label>
+          <a href="profile.html">View demo profile</a>
+        </div>
+        <button class="primary-button wide" type="submit">Log in</button>
+      </form>
+      <div class="switch-note">
+        New to Study Mesh? <a href="signup.html">Create a profile</a>
+      </div>
+      <p class="form-message" id="loginMessage" role="status"></p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

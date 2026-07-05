@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile | Study Mesh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">SM</span>
+      <span>Study Mesh</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html">Find tutors</a>
+      <a href="sessions.html">Sessions</a>
+      <a href="notes.html">Notes</a>
+      <a class="active" href="profile.html">Profile</a>
+      <a class="login-link" href="login.html">Log in</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="profile-header">
+      <div class="avatar avatar-blue large-avatar" id="profileInitial">A</div>
+      <div>
+        <p class="eyebrow">Student profile</p>
+        <h1 id="profileName">Alex Rivera</h1>
+        <p id="profileBio">Junior College learner, algebra tutor, and weekend study group host.</p>
+      </div>
+      <div class="profile-actions">
+        <a class="primary-button" href="booking.html">Book next session</a>
+        <a class="secondary-button" id="profileLinkedinButton" href="https://www.linkedin.com/in/alex-rivera-study-mesh" target="_blank" rel="noopener">LinkedIn profile</a>
+      </div>
+    </section>
+
+    <section class="profile-grid">
+      <article class="panel">
+        <h2>Learning goals</h2>
+        <ul class="clean-list" id="profileGoals">
+          <li>Improve H2 Mathematics timed practice scores</li>
+          <li>Finish chemistry practical planning drafts earlier</li>
+          <li>Practice General Paper comprehension twice per week</li>
+        </ul>
+      </article>
+
+      <article class="panel">
+        <h2>Tutoring offer</h2>
+        <p class="body-copy" id="profileOffer">Alex can tutor Lower Secondary Mathematics, E-Math, and beginner HTML. Available Monday, Wednesday, and Saturday.</p>
+        <div class="tag-row" id="profileTags">
+          <span>E-Math</span>
+          <span>HTML</span>
+          <span>Peer mentor</span>
+        </div>
+      </article>
+
+      <article class="panel stats-card">
+        <h2>Mesh stats</h2>
+        <div class="stats-grid">
+          <div><strong>18</strong><span>Sessions</span></div>
+          <div><strong>4.9</strong><span>Rating</span></div>
+          <div><strong>420</strong><span>Points</span></div>
+          <div><strong>7</strong><span>Badges</span></div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Badges</h2>
+        <div class="badge-row">
+          <span>Problem Solver</span>
+          <span>On Time</span>
+          <span>Clear Notes</span>
+          <span>Study Streak</span>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Contact links</h2>
+        <p class="body-copy" id="profileContact">Connect for tutoring history, study projects, and peer mentor experience.</p>
+        <a class="link-card" id="profileLinkedinCard" href="https://www.linkedin.com/in/alex-rivera-study-mesh" target="_blank" rel="noopener">
+          <strong>LinkedIn</strong>
+          <span id="profileLinkedinText">linkedin.com/in/alex-rivera-study-mesh</span>
+        </a>
+      </article>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking | Study Mesh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">SM</span>
+      <span>Study Mesh</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html">Find tutors</a>
+      <a href="sessions.html">Sessions</a>
+      <a href="notes.html">Notes</a>
+      <a href="profile.html">Profile</a>
+      <a class="login-link" href="login.html">Log in</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="page-title">
+      <div>
+        <p class="eyebrow">Booking</p>
+        <h1>Reserve a tutoring session</h1>
+      </div>
+      <a class="text-button" href="sessions.html">Track sessions</a>
+    </section>
+
+    <section class="booking-layout">
+      <form class="booking-form panel" id="bookingForm">
+        <h2>Session details</h2>
+        <label>
+          Tutor
+          <select id="tutorSelect" required>
+            <option>Maya Johnson</option>
+            <option>Sam Kim</option>
+            <option>Lina Patel</option>
+            <option>Tariq Owens</option>
+            <option>Noah Chen</option>
+            <option>Emma Rodriguez</option>
+            <option>Hannah Koh</option>
+            <option>Jayden Ali</option>
+            <option>Chloe Lim</option>
+            <option>Ryan Seah</option>
+          </select>
+        </label>
+        <label>
+          Subject
+          <select id="subjectSelect" required>
+            <option>Math</option>
+            <option>Science</option>
+            <option>English</option>
+            <option>Chinese</option>
+            <option>Coding</option>
+            <option>General Paper</option>
+            <option>Engineering Math</option>
+          </select>
+        </label>
+        <label>
+          Date
+          <input id="dateInput" type="date" required>
+        </label>
+        <label>
+          Place
+          <select id="placeSelect" required>
+            <option>Library study room</option>
+            <option>Online video call</option>
+            <option>School canteen</option>
+            <option>Polytechnic library</option>
+            <option>University study lounge</option>
+            <option>Community center</option>
+          </select>
+        </label>
+        <label>
+          Session goal
+          <textarea rows="4" placeholder="Example: Review O-Level algebra before this week's class test" required></textarea>
+        </label>
+
+        <fieldset>
+          <legend>Available times</legend>
+          <div class="time-grid">
+            <label><input type="radio" name="time" value="3:30 PM" required>3:30 PM</label>
+            <label><input type="radio" name="time" value="4:15 PM">4:15 PM</label>
+            <label><input type="radio" name="time" value="5:00 PM">5:00 PM</label>
+            <label><input type="radio" name="time" value="6:30 PM">6:30 PM</label>
+          </div>
+        </fieldset>
+
+        <button class="primary-button wide" type="submit">Confirm booking</button>
+        <p class="form-message" id="bookingMessage" role="status"></p>
+      </form>
+
+      <aside class="schedule-panel panel">
+        <h2>Upcoming sessions</h2>
+        <div class="session-list">
+          <article>
+            <span class="date-chip">Jul 8</span>
+            <div>
+              <strong>H2 Math review</strong>
+              <p>Maya Johnson, 4:15 PM, Library study room</p>
+            </div>
+          </article>
+          <article>
+            <span class="date-chip">Jul 10</span>
+            <div>
+              <strong>General Paper outline</strong>
+              <p>Lina Patel, 5:00 PM, Online video call</p>
+            </div>
+          </article>
+          <article>
+            <span class="date-chip">Jul 12</span>
+            <div>
+              <strong>Polytechnic Python help</strong>
+              <p>Tariq Owens, 3:30 PM, School canteen</p>
+            </div>
+          </article>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

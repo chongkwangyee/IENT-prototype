@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Mesh | Peer Tutoring</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="index.html" aria-label="Study Mesh home">
+      <span class="brand-mark">SM</span>
+      <span>Study Mesh</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a class="active" href="index.html">Find tutors</a>
+      <a href="sessions.html">Sessions</a>
+      <a href="notes.html">Notes</a>
+      <a href="profile.html">Profile</a>
+      <a class="login-link" href="login.html">Log in</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="workspace">
+      <aside class="sidebar">
+        <div class="profile-chip">
+          <div class="avatar avatar-blue">A</div>
+          <div>
+            <strong>Alex Rivera</strong>
+            <span>Junior College student</span>
+          </div>
+        </div>
+
+        <div class="panel compact-panel">
+          <h2>Today</h2>
+          <div class="mini-stat">
+            <span>Sessions</span>
+            <strong>3</strong>
+          </div>
+          <div class="mini-stat">
+            <span>Mesh points</span>
+            <strong>420</strong>
+          </div>
+        </div>
+
+        <div class="panel compact-panel">
+          <h2>Subjects</h2>
+          <div class="subject-stack">
+            <button class="subject-pill active" data-subject="all">All</button>
+            <button class="subject-pill" data-subject="math">Math</button>
+            <button class="subject-pill" data-subject="science">Science</button>
+            <button class="subject-pill" data-subject="english">English</button>
+            <button class="subject-pill" data-subject="chinese">Chinese</button>
+            <button class="subject-pill" data-subject="coding">Coding</button>
+          </div>
+        </div>
+      </aside>
+
+      <section class="content-area">
+        <div class="hero-strip">
+          <div>
+            <p class="eyebrow">Peer-to-peer tutoring</p>
+            <h1>Find a Singapore student tutor for your level.</h1>
+            <p>Match by Primary, Secondary, Polytechnic, Junior College, or University level, then book quick help or recurring sessions.</p>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="mesh-node node-a"></div>
+            <div class="mesh-node node-b"></div>
+            <div class="mesh-node node-c"></div>
+            <div class="mesh-node node-d"></div>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <label class="search-box">
+            <span>Search</span>
+            <input id="searchInput" type="search" placeholder="Subject, tutor, or skill">
+          </label>
+          <label class="select-box">
+            <span>Level</span>
+            <select id="levelSelect">
+              <option value="all">Any level</option>
+              <option value="primary">Primary school</option>
+              <option value="secondary">Secondary school</option>
+              <option value="polytechnic">Polytechnic</option>
+              <option value="jc">Junior college</option>
+              <option value="university">University</option>
+            </select>
+          </label>
+        </div>
+
+        <section class="section-heading">
+          <div>
+            <h2>Available tutors</h2>
+            <p>Choose a peer tutor, compare prices, then reserve a session.</p>
+          </div>
+          <a class="text-button" href="sessions.html">Track sessions</a>
+        </section>
+
+        <div class="tutor-grid" id="tutorGrid">
+          <article class="tutor-card" data-subject="math" data-level="jc" data-keywords="h2 mathematics a level calculus algebra math junior college">
+            <div class="card-top">
+              <div class="avatar avatar-green">MJ</div>
+              <span class="rating">4.9</span>
+            </div>
+            <h3>Maya Johnson</h3>
+            <p>H2 Mathematics, calculus, algebra refreshers, and A-Level exam walkthroughs.</p>
+            <div class="tag-row">
+              <span>Math</span>
+              <span>Junior college</span>
+            </div>
+            <div class="tutor-price"><strong>$8</strong><span>per session</span></div>
+            <a class="primary-button" href="booking.html?tutor=Maya%20Johnson">Book Maya</a>
+          </article>
+
+          <article class="tutor-card" data-subject="science" data-level="secondary" data-keywords="o level biology chemistry lab science secondary">
+            <div class="card-top">
+              <div class="avatar avatar-orange">SK</div>
+              <span class="rating">4.8</span>
+            </div>
+            <h3>Sam Kim</h3>
+            <p>O-Level biology diagrams, chemistry balancing, and practical report skills.</p>
+            <div class="tag-row">
+              <span>Science</span>
+              <span>Secondary school</span>
+            </div>
+            <div class="tutor-price"><strong>$7</strong><span>per session</span></div>
+            <a class="primary-button" href="booking.html?tutor=Sam%20Kim">Book Sam</a>
+          </article>
+
+          <article class="tutor-card" data-subject="english" data-level="jc" data-keywords="gp general paper essay writing english literature junior college">
+            <div class="card-top">
+              <div class="avatar avatar-purple">LP</div>
+              <span class="rating">5.0</span>
+            </div>
+            <h3>Lina Patel</h3>
+            <p>General Paper essay structure, argument building, and comprehension practice.</p>
+            <div class="tag-row">
+              <span>English</span>
+              <span>Junior college</span>
+            </div>
+            <div class="tutor-price"><strong>$9</strong><span>per session</span></div>
+            <a class="primary-button" href="booking.html?tutor=Lina%20Patel">Book Lina</a>
+          </article>
+
+          <article class="tutor-card" data-subject="coding" data-level="polytechnic" data-keywords="python html css javascript coding polytechnic">
+            <div class="card-top">
+              <div class="avatar avatar-blue">TO</div>
+              <span class="rating">4.7</span>
+            </div>
+            <h3>Tariq Owens</h3>
+            <p>Python basics, HTML/CSS projects, and polytechnic programming practice.</p>
+            <div class="tag-row">
+              <span>Coding</span>
+              <span>Polytechnic</span>
+            </div>
+            <div class="tutor-price"><strong>$6</strong><span>per session</span></div>
+            <a class="primary-button" href="booking.html?tutor=Tariq%20Owens">Book Tariq</a>
+          </article>
+
+          <article class="tutor-card" data-subject="math" data-level="primary" data-keywords="psle fractions problem sums math primary">
+            <div class="card-top">
+              <div class="avatar avatar-orange">NC</div>
+              <span class="rating">4.8</span>
+            </div>
+            <h3>Noah Chen</h3>
+            <p>PSLE problem sums, fractions, ratios, and model drawing confidence.</p>
+            <div class="tag-row">
+              <span>Math</span>
+              <span>Primary school</span>
+            </div>
+            <div class="tutor-price"><strong>$5</strong><span>per session</span></div>
+            <a class="primary-button" href="booking.html?tutor=Noah%20Chen">Book Noah</a>
+          </article>
+
+          <article class="tutor-card" data-subject="science" data-level="primary" data-keywords="psle science cycles systems energy primary">
+            <div class="card-top">
+              <div class="avatar avatar-green">ER</div>
+              <span class="rating">4.6</span>
+            </div>
+            <h3>Emma Rodriguez</h3>
+            <p>PSLE Science cycles, systems, energy, and structured answering.</p>
+            <div class="tag-row">
+              <span>Science</span>
+              <span>Primary school</span>
+            </div>
+            <div class="tutor-price"><strong>$6</strong><span>per session</span></div>
+            <a class="primary-button" href="booking.html?tutor=Emma%20Rodriguez">Book Emma</a>
+          </article>
+
+          <article class="tutor-card" data-subject="english" data-level="secondary" data-keywords="o level english grammar situational writing essay oral">
+            <div class="card-top">
+              <div class="avatar avatar-blue">HK</div>
+              <span class="rating">4.9</span>
+            </div>
+            <h3>Hannah Koh</h3>
+            <p>O-Level English editing, situational writing, essays, and oral practice.</p>
+            <div class="tag-row">
+              <span>English</span>
+              <span>Secondary school</span>
+            </div>
+            <div class="tutor-price"><strong>$7</strong><span>per session</span></div>
+            <a class="primary-button" href="booking.html?tutor=Hannah%20Koh">Book Hannah</a>
+          </article>
+
+          <article class="tutor-card" data-subject="coding" data-level="university" data-keywords="javascript web apps coding portfolio university">
+            <div class="card-top">
+              <div class="avatar avatar-purple">JA</div>
+              <span class="rating">5.0</span>
+            </div>
+            <h3>Jayden Ali</h3>
+            <p>JavaScript, web app architecture, and university portfolio project reviews.</p>
+            <div class="tag-row">
+              <span>Coding</span>
+              <span>University</span>
+            </div>
+            <div class="tutor-price"><strong>$10</strong><span>per session</span></div>
+            <a class="primary-button" href="booking.html?tutor=Jayden%20Ali">Book Jayden</a>
+          </article>
+
+          <article class="tutor-card" data-subject="chinese" data-level="primary" data-keywords="psle chinese oral composition comprehension primary">
+            <div class="card-top">
+              <div class="avatar avatar-orange">CL</div>
+              <span class="rating">4.8</span>
+            </div>
+            <h3>Chloe Lim</h3>
+            <p>PSLE Chinese oral, composition planning, and comprehension practice.</p>
+            <div class="tag-row">
+              <span>Chinese</span>
+              <span>Primary school</span>
+            </div>
+            <div class="tutor-price"><strong>$5</strong><span>per session</span></div>
+            <a class="primary-button" href="booking.html?tutor=Chloe%20Lim">Book Chloe</a>
+          </article>
+
+          <article class="tutor-card" data-subject="math" data-level="polytechnic" data-keywords="engineering math statistics polytechnic">
+            <div class="card-top">
+              <div class="avatar avatar-blue">RS</div>
+              <span class="rating">4.7</span>
+            </div>
+            <h3>Ryan Seah</h3>
+            <p>Polytechnic engineering math, statistics, and tutorial preparation.</p>
+            <div class="tag-row">
+              <span>Math</span>
+              <span>Polytechnic</span>
+            </div>
+            <div class="tutor-price"><strong>$8</strong><span>per session</span></div>
+            <a class="primary-button" href="booking.html?tutor=Ryan%20Seah">Book Ryan</a>
+          </article>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
