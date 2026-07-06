@@ -105,6 +105,11 @@ textarea {
   margin: 1.25rem auto 3rem;
 }
 
+.public-home {
+  width: min(1220px, calc(100% - 2rem));
+  margin: 1.25rem auto 3rem;
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -224,6 +229,63 @@ textarea {
     linear-gradient(135deg, rgba(23, 32, 42, 0.9), rgba(30, 64, 175, 0.88)),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='520' viewBox='0 0 900 520'%3E%3Crect fill='%2317202a' width='900' height='520'/%3E%3Ccircle cx='130' cy='120' r='64' fill='%232563eb'/%3E%3Ccircle cx='730' cy='92' r='78' fill='%230f9f6e'/%3E%3Ccircle cx='610' cy='390' r='112' fill='%23f97316'/%3E%3Cpath d='M130 120 360 260 730 92M360 260 610 390M360 260 210 410' stroke='%23fff' stroke-opacity='.35' stroke-width='10'/%3E%3C/svg%3E");
   background-size: cover;
+}
+
+.public-hero {
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 28rem);
+  min-height: 27rem;
+}
+
+.public-hero h1 {
+  max-width: 13ch;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+
+.light-button {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.posted-image {
+  width: 100%;
+  max-height: 23rem;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 0.55rem;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.about-panel {
+  padding: 1.15rem;
+}
+
+.about-panel h2 {
+  margin: 0 0 0.65rem;
+  font-size: 1.18rem;
+}
+
+.about-panel p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.locked-preview {
+  margin-top: 1.5rem;
 }
 
 .eyebrow {
@@ -572,6 +634,24 @@ legend {
   gap: 1rem;
 }
 
+.profile-edit-panel {
+  margin-top: 1rem;
+  padding: 1.2rem;
+}
+
+.profile-edit-panel form {
+  display: grid;
+  gap: 1rem;
+}
+
+.profile-edit-panel label {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
 .clean-list {
   display: grid;
   gap: 0.7rem;
@@ -851,6 +931,69 @@ legend {
   font-weight: 800;
 }
 
+.payment-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(23, 32, 42, 0.55);
+}
+
+.payment-card {
+  position: relative;
+  width: min(30rem, 100%);
+  padding: 1.25rem;
+}
+
+.payment-card h2 {
+  margin: 0 0 0.65rem;
+}
+
+.payment-card p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--muted);
+  font-weight: 800;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.payment-options {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.payment-options button {
+  padding: 0.85rem;
+  color: var(--ink);
+  font-weight: 800;
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.payment-options button:hover {
+  color: var(--blue-dark);
+  border-color: #9db7ff;
+  background: #edf4ff;
+}
+
 .hidden {
   display: none !important;
 }
@@ -860,7 +1003,9 @@ legend {
   .booking-layout,
   .auth-layout,
   .signup-layout,
-  .notes-grid {
+  .notes-grid,
+  .about-grid,
+  .public-hero {
     grid-template-columns: 1fr;
   }
 
@@ -916,6 +1061,10 @@ legend {
   .auth-intro h1 {
     max-width: none;
     font-size: 2.4rem;
+  }
+
+  .posted-image {
+    max-height: 18rem;
   }
 
   .auth-intro {

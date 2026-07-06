@@ -16,7 +16,7 @@
       <span>Study Mesh</span>
     </a>
     <nav class="nav-links" aria-label="Main navigation">
-      <a href="index.html">Find tutors</a>
+      <a href="index.html">About</a>
       <a href="sessions.html">Sessions</a>
       <a class="active" href="notes.html">Notes</a>
       <a href="profile.html">Profile</a>
@@ -40,7 +40,7 @@
         <h2>PSLE English notes</h2>
         <p>Composition planning, comprehension answering, and oral practice prompts.</p>
         <div class="price-row"><strong>$3</strong><span>per pack</span></div>
-        <button class="primary-button wide" type="button">Buy notes</button>
+        <button class="primary-button wide buy-note-button" type="button" data-note="PSLE English notes" data-price="$3">Buy notes</button>
       </article>
 
       <article class="note-card panel">
@@ -48,7 +48,7 @@
         <h2>O-Level E-Math notes</h2>
         <p>Algebra, geometry, trigonometry, worked examples, and common mistakes.</p>
         <div class="price-row"><strong>$3</strong><span>per pack</span></div>
-        <button class="primary-button wide" type="button">Buy notes</button>
+        <button class="primary-button wide buy-note-button" type="button" data-note="O-Level E-Math notes" data-price="$3">Buy notes</button>
       </article>
 
       <article class="note-card panel">
@@ -56,7 +56,7 @@
         <h2>Chinese oral notes</h2>
         <p>Conversation phrases, reading tips, picture discussion, and vocabulary lists.</p>
         <div class="price-row"><strong>$3</strong><span>per pack</span></div>
-        <button class="primary-button wide" type="button">Buy notes</button>
+        <button class="primary-button wide buy-note-button" type="button" data-note="Chinese oral notes" data-price="$3">Buy notes</button>
       </article>
 
       <article class="note-card panel">
@@ -64,7 +64,7 @@
         <h2>O-Level Science notes</h2>
         <p>Biology diagrams, chemistry equations, physics concepts, and practical tips.</p>
         <div class="price-row"><strong>$3</strong><span>per pack</span></div>
-        <button class="primary-button wide" type="button">Buy notes</button>
+        <button class="primary-button wide buy-note-button" type="button" data-note="O-Level Science notes" data-price="$3">Buy notes</button>
       </article>
 
       <article class="note-card panel">
@@ -72,7 +72,7 @@
         <h2>JC H2 Math notes</h2>
         <p>Calculus, vectors, statistics, exam strategies, and formula summaries.</p>
         <div class="price-row"><strong>$3</strong><span>per pack</span></div>
-        <button class="primary-button wide" type="button">Buy notes</button>
+        <button class="primary-button wide buy-note-button" type="button" data-note="JC H2 Math notes" data-price="$3">Buy notes</button>
       </article>
 
       <article class="note-card panel">
@@ -80,7 +80,7 @@
         <h2>Polytechnic module notes</h2>
         <p>Programming basics, engineering math, business stats, and project templates.</p>
         <div class="price-row"><strong>$3</strong><span>per pack</span></div>
-        <button class="primary-button wide" type="button">Buy notes</button>
+        <button class="primary-button wide buy-note-button" type="button" data-note="Polytechnic module notes" data-price="$3">Buy notes</button>
       </article>
 
       <article class="note-card panel">
@@ -88,9 +88,25 @@
         <h2>University foundation notes</h2>
         <p>Academic writing, introductory statistics, coding, and revision checklists.</p>
         <div class="price-row"><strong>$3</strong><span>per pack</span></div>
-        <button class="primary-button wide" type="button">Buy notes</button>
+        <button class="primary-button wide buy-note-button" type="button" data-note="University foundation notes" data-price="$3">Buy notes</button>
       </article>
     </section>
   </main>
+
+  <div class="payment-modal hidden" id="paymentModal" role="dialog" aria-modal="true" aria-labelledby="paymentTitle">
+    <div class="payment-card panel">
+      <button class="modal-close" id="closePaymentModal" type="button" aria-label="Close payment options">x</button>
+      <p class="eyebrow">Payment</p>
+      <h2 id="paymentTitle">Choose payment method</h2>
+      <p id="paymentSummary">Select a method to buy these notes.</p>
+      <div class="payment-options">
+        <button type="button" data-method="PayNow">PayNow</button>
+        <button type="button" data-method="PayLah">PayLah</button>
+        <button type="button" data-method="Bank transfer">Bank transfer</button>
+      </div>
+      <p class="form-message" id="paymentMessage" role="status"></p>
+    </div>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>

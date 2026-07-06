@@ -16,7 +16,7 @@
       <span>Study Mesh</span>
     </a>
     <nav class="nav-links" aria-label="Main navigation">
-      <a class="active" href="index.html">Find tutors</a>
+      <a class="active" href="index.html">About</a>
       <a href="sessions.html">Sessions</a>
       <a href="notes.html">Notes</a>
       <a href="profile.html">Profile</a>
@@ -25,54 +25,44 @@
   </header>
 
   <main>
-    <section class="workspace">
-      <aside class="sidebar">
-        <div class="profile-chip">
-          <div class="avatar avatar-blue">A</div>
+    <section class="public-home">
+      <div class="hero-strip public-hero">
+        <div>
+          <p class="eyebrow">Study Mesh</p>
+          <h1>Peer-to-peer study help for Singapore students.</h1>
+          <p>Study Mesh connects learners with other students who understand the same exams, modules, deadlines, and school pressure.</p>
+          <div class="hero-actions">
+            <a class="primary-button" href="signup.html">Sign up</a>
+            <a class="secondary-button light-button" href="login.html">Log in</a>
+          </div>
+        </div>
+        <img class="posted-image" src="WhatsApp Image 2026-07-06 at 15.20.41.jpeg" alt="Study Mesh shared visual">
+      </div>
+
+      <section class="about-grid" aria-label="About Study Mesh">
+        <article class="panel about-panel">
+          <p class="eyebrow">About me</p>
+          <h2>Built around real student routines</h2>
+          <p>Study Mesh is a peer-to-peer platform where students can book affordable tutoring sessions, share revision notes, and build a profile that shows what they need help with and what they can teach.</p>
+        </article>
+        <article class="panel about-panel">
+          <p class="eyebrow">Peer-to-peer</p>
+          <h2>Learn from someone close to your level</h2>
+          <p>Instead of only formal tuition, the mesh lets Primary, Secondary, Polytechnic, Junior College, and University students support one another with targeted sessions and practical notes.</p>
+        </article>
+        <article class="panel about-panel">
+          <p class="eyebrow">After joining</p>
+          <h2>Book sessions and buy notes</h2>
+          <p>Once you sign up or log in, you can reserve tutor sessions, purchase study notes through PayNow, PayLah, or bank transfer, and edit your profile details anytime.</p>
+        </article>
+      </section>
+
+      <section class="locked-preview">
+        <div class="section-heading">
           <div>
-            <strong>Alex Rivera</strong>
-            <span>Junior College student</span>
-          </div>
-        </div>
-
-        <div class="panel compact-panel">
-          <h2>Today</h2>
-          <div class="mini-stat">
-            <span>Sessions</span>
-            <strong>3</strong>
-          </div>
-          <div class="mini-stat">
-            <span>Mesh points</span>
-            <strong>420</strong>
-          </div>
-        </div>
-
-        <div class="panel compact-panel">
-          <h2>Subjects</h2>
-          <div class="subject-stack">
-            <button class="subject-pill active" data-subject="all">All</button>
-            <button class="subject-pill" data-subject="math">Math</button>
-            <button class="subject-pill" data-subject="science">Science</button>
-            <button class="subject-pill" data-subject="english">English</button>
-            <button class="subject-pill" data-subject="chinese">Chinese</button>
-            <button class="subject-pill" data-subject="coding">Coding</button>
-          </div>
-        </div>
-      </aside>
-
-      <section class="content-area">
-        <div class="hero-strip">
-          <div>
-            <p class="eyebrow">Peer-to-peer tutoring</p>
-            <h1>Find a Singapore student tutor for your level.</h1>
-            <p>Match by Primary, Secondary, Polytechnic, Junior College, or University level, then book quick help or recurring sessions.</p>
-          </div>
-          <div class="hero-visual" aria-hidden="true">
-            <div class="mesh-node node-a"></div>
-            <div class="mesh-node node-b"></div>
-            <div class="mesh-node node-c"></div>
-            <div class="mesh-node node-d"></div>
-            <span></span>
+            <p class="eyebrow">Member area</p>
+            <h2>Preview available tutors</h2>
+            <p>Sign up or log in to book any tutor below.</p>
           </div>
         </div>
 
@@ -93,14 +83,6 @@
             </select>
           </label>
         </div>
-
-        <section class="section-heading">
-          <div>
-            <h2>Available tutors</h2>
-            <p>Choose a peer tutor, compare prices, then reserve a session.</p>
-          </div>
-          <a class="text-button" href="sessions.html">Track sessions</a>
-        </section>
 
         <div class="tutor-grid" id="tutorGrid">
           <article class="tutor-card" data-subject="math" data-level="jc" data-keywords="h2 mathematics a level calculus algebra math junior college">

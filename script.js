@@ -2,6 +2,39 @@ const tutorGrid = document.querySelector("#tutorGrid");
 const subjectButtons = document.querySelectorAll(".subject-pill");
 const searchInput = document.querySelector("#searchInput");
 const levelSelect = document.querySelector("#levelSelect");
+const protectedPages = ["booking.html", "notes.html", "profile.html", "sessions.html"];
+const currentPage = window.location.pathname.split("/").pop() || "index.html";
+const isLoggedIn = localStorage.getItem("studyMeshLoggedIn") === "true";
+const savedProfile = JSON.parse(localStorage.getItem("studyMeshProfile") || "null");
+
+function goToLogin() {
+  const next = encodeURIComponent(`${currentPage}${window.location.search}`);
+  window.location.href = `login.html?next=${next}`;
+}
+
+if (protectedPages.includes(currentPage) && !isLoggedIn) {
+  goToLogin();
+}
+
+document.querySelectorAll(".login-link").forEach((link) => {
+  if (!isLoggedIn) return;
+  link.textContent = "Log out";
+  link.href = "#";
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    localStorage.setItem("studyMeshLoggedIn", "false");
+    window.location.href = "index.html";
+  });
+});
+
+document.querySelectorAll('a[href^="booking.html"]').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    if (isLoggedIn) return;
+    event.preventDefault();
+    const next = encodeURIComponent(link.getAttribute("href"));
+    window.location.href = `login.html?next=${next}`;
+  });
+});
 
 function filterTutors() {
   if (!tutorGrid) return;
@@ -99,9 +132,11 @@ const loginMessage = document.querySelector("#loginMessage");
 
 loginForm?.addEventListener("submit", (event) => {
   event.preventDefault();
-  loginMessage.textContent = "Logged in for the demo. Redirecting to your profile...";
+  localStorage.setItem("studyMeshLoggedIn", "true");
+  loginMessage.textContent = "Logged in for the demo. Redirecting...";
+  const next = new URLSearchParams(window.location.search).get("next") || "profile.html";
   window.setTimeout(() => {
-    window.location.href = "profile.html";
+    window.location.href = next;
   }, 800);
 });
 
@@ -128,13 +163,12 @@ signupForm?.addEventListener("submit", (event) => {
     linkedin: document.querySelector("#signupLinkedin").value.trim()
   };
   localStorage.setItem("studyMeshProfile", JSON.stringify(profile));
+  localStorage.setItem("studyMeshLoggedIn", "true");
   signupMessage.textContent = "Profile created. Opening your profile...";
   window.setTimeout(() => {
     window.location.href = "profile.html";
   }, 700);
 });
-
-const savedProfile = JSON.parse(localStorage.getItem("studyMeshProfile") || "null");
 
 function setText(selector, value) {
   const element = document.querySelector(selector);
@@ -187,3 +221,74 @@ if (savedProfile) {
   if (linkedinButton) linkedinButton.href = linkedin;
   if (linkedinCard) linkedinCard.href = linkedin;
 }
+
+const editProfileButton = document.querySelector("#editProfileButton");
+const profileEditPanel = document.querySelector("#profileEditPanel");
+const profileEditForm = document.querySelector("#profileEditForm");
+const profileEditMessage = document.querySelector("#profileEditMessage");
+
+function fillProfileEditForm(profile) {
+  if (!profileEditForm) return;
+  document.querySelector("#editName").value = profile?.name || "Alex Rivera";
+  document.querySelector("#editGrade").value = profile?.grade || "Junior college";
+  document.querySelector("#editEmail").value = profile?.email || "alex@school.edu.sg";
+  document.querySelector("#editBio").value = profile?.bio || "Junior College learner, algebra tutor, and weekend study group host.";
+  document.querySelector("#editGoals").value = (profile?.goals || ["Improve H2 Mathematics timed practice scores"]).join(", ");
+  document.querySelector("#editTutoring").value = (profile?.tutoring || ["Lower Secondary Mathematics", "E-Math", "beginner HTML"]).join(", ");
+  document.querySelector("#editAvailability").value = profile?.availability || "Monday, Wednesday, Saturday";
+  document.querySelector("#editLinkedin").value = profile?.linkedin || "https://www.linkedin.com/in/alex-rivera-study-mesh";
+}
+
+editProfileButton?.addEventListener("click", () => {
+  fillProfileEditForm(savedProfile);
+  profileEditPanel?.classList.toggle("hidden");
+  profileEditPanel?.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+profileEditForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const updatedProfile = {
+    name: document.querySelector("#editName").value.trim(),
+    grade: document.querySelector("#editGrade").value.trim(),
+    email: document.querySelector("#editEmail").value.trim(),
+    bio: document.querySelector("#editBio").value.trim(),
+    goals: splitList(document.querySelector("#editGoals").value),
+    tutoring: splitList(document.querySelector("#editTutoring").value),
+    availability: document.querySelector("#editAvailability").value.trim(),
+    linkedin: document.querySelector("#editLinkedin").value.trim()
+  };
+  localStorage.setItem("studyMeshProfile", JSON.stringify(updatedProfile));
+  profileEditMessage.textContent = "Profile details saved.";
+  window.setTimeout(() => window.location.reload(), 500);
+});
+
+const paymentModal = document.querySelector("#paymentModal");
+const closePaymentModal = document.querySelector("#closePaymentModal");
+const paymentSummary = document.querySelector("#paymentSummary");
+const paymentMessage = document.querySelector("#paymentMessage");
+
+document.querySelectorAll(".buy-note-button").forEach((button) => {
+  button.addEventListener("click", () => {
+    if (!isLoggedIn) {
+      goToLogin();
+      return;
+    }
+    paymentSummary.textContent = `${button.dataset.note} costs ${button.dataset.price}. Choose how you want to pay.`;
+    paymentMessage.textContent = "";
+    paymentModal?.classList.remove("hidden");
+  });
+});
+
+closePaymentModal?.addEventListener("click", () => {
+  paymentModal?.classList.add("hidden");
+});
+
+paymentModal?.addEventListener("click", (event) => {
+  if (event.target === paymentModal) paymentModal.classList.add("hidden");
+});
+
+document.querySelectorAll(".payment-options button").forEach((button) => {
+  button.addEventListener("click", () => {
+    paymentMessage.textContent = `${button.dataset.method} selected. Payment instructions will be sent to your school email.`;
+  });
+});

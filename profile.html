@@ -16,7 +16,7 @@
       <span>Study Mesh</span>
     </a>
     <nav class="nav-links" aria-label="Main navigation">
-      <a href="index.html">Find tutors</a>
+      <a href="index.html">About</a>
       <a href="sessions.html">Sessions</a>
       <a href="notes.html">Notes</a>
       <a class="active" href="profile.html">Profile</a>
@@ -34,6 +34,7 @@
       </div>
       <div class="profile-actions">
         <a class="primary-button" href="booking.html">Book next session</a>
+        <button class="secondary-button" id="editProfileButton" type="button">Edit profile</button>
         <a class="secondary-button" id="profileLinkedinButton" href="https://www.linkedin.com/in/alex-rivera-study-mesh" target="_blank" rel="noopener">LinkedIn profile</a>
       </div>
     </section>
@@ -86,6 +87,58 @@
           <span id="profileLinkedinText">linkedin.com/in/alex-rivera-study-mesh</span>
         </a>
       </article>
+    </section>
+
+    <section class="panel profile-edit-panel hidden" id="profileEditPanel" aria-labelledby="profileEditTitle">
+      <h2 id="profileEditTitle">Edit profile details</h2>
+      <form id="profileEditForm">
+        <div class="form-grid">
+          <label>
+            Full name
+            <input id="editName" type="text" required>
+          </label>
+          <label>
+            Education level
+            <select id="editGrade" required>
+              <option>Primary school</option>
+              <option>Secondary school</option>
+              <option>Polytechnic</option>
+              <option>Junior college</option>
+              <option>University</option>
+            </select>
+          </label>
+        </div>
+        <label>
+          School email
+          <input id="editEmail" type="email" required>
+        </label>
+        <label>
+          Short bio
+          <textarea id="editBio" rows="3" required></textarea>
+        </label>
+        <div class="form-grid">
+          <label>
+            Learning goals
+            <input id="editGoals" type="text">
+          </label>
+          <label>
+            Can tutor
+            <input id="editTutoring" type="text">
+          </label>
+        </div>
+        <div class="form-grid">
+          <label>
+            Availability
+            <input id="editAvailability" type="text">
+          </label>
+          <label>
+            LinkedIn profile
+            <input id="editLinkedin" type="url">
+          </label>
+        </div>
+        <button class="primary-button" type="submit">Save changes</button>
+        <p class="form-message" id="profileEditMessage" role="status"></p>
+      </form>
     </section>
   </main>
   <script src="script.js"></script>
