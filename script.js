@@ -16,6 +16,10 @@ if (protectedPages.includes(currentPage) && !isLoggedIn) {
   goToLogin();
 }
 
+if (isLoggedIn) {
+  document.querySelectorAll(".guest-only").forEach((element) => element.classList.add("hidden"));
+}
+
 document.querySelectorAll(".login-link").forEach((link) => {
   if (!isLoggedIn) return;
   link.textContent = "Log out";
@@ -142,6 +146,29 @@ loginForm?.addEventListener("submit", (event) => {
 
 const signupForm = document.querySelector("#signupForm");
 const signupMessage = document.querySelector("#signupMessage");
+const accountTypeInputs = document.querySelectorAll('input[name="accountType"]');
+
+function selectedAccountType() {
+  return document.querySelector('input[name="accountType"]:checked')?.value || "student";
+}
+
+function updateSignupAccountType() {
+  const isTutor = selectedAccountType() === "tutor";
+  document.querySelectorAll(".account-type-option").forEach((option) => {
+    option.classList.toggle("selected", option.querySelector("input")?.checked);
+  });
+  document.querySelector("#studentFields")?.classList.toggle("hidden", isTutor);
+  document.querySelectorAll(".tutor-signup-fields").forEach((field) => {
+    field.classList.toggle("hidden", !isTutor);
+  });
+  const subscription = document.querySelector("#signupTutorSubscription");
+  if (subscription) subscription.required = isTutor;
+  const submitButton = document.querySelector("#signupSubmitButton");
+  if (submitButton) submitButton.textContent = isTutor ? "Create tutor account - $10/month" : "Create student account";
+}
+
+accountTypeInputs.forEach((input) => input.addEventListener("change", updateSignupAccountType));
+updateSignupAccountType();
 
 function splitList(value) {
   return value
@@ -152,19 +179,25 @@ function splitList(value) {
 
 signupForm?.addEventListener("submit", (event) => {
   event.preventDefault();
+  const accountType = selectedAccountType();
   const profile = {
+    accountType,
     name: document.querySelector("#signupName").value.trim(),
     grade: document.querySelector("#signupGrade").value.trim(),
     email: document.querySelector("#signupEmail").value.trim(),
     bio: document.querySelector("#signupBio").value.trim(),
-    goals: splitList(document.querySelector("#signupGoals").value),
-    tutoring: splitList(document.querySelector("#signupTutoring").value),
-    availability: document.querySelector("#signupAvailability").value.trim(),
-    linkedin: document.querySelector("#signupLinkedin").value.trim()
+    goals: splitList(document.querySelector("#signupGoals")?.value || ""),
+    tutoring: splitList(document.querySelector("#signupTutoring")?.value || ""),
+    availability: document.querySelector("#signupAvailability")?.value.trim() || "",
+    linkedin: document.querySelector("#signupLinkedin")?.value.trim() || "",
+    fiveStarRatings: 0,
+    premiumTutor: false
   };
   localStorage.setItem("studyMeshProfile", JSON.stringify(profile));
   localStorage.setItem("studyMeshLoggedIn", "true");
-  signupMessage.textContent = "Profile created. Opening your profile...";
+  signupMessage.textContent = accountType === "tutor"
+    ? "Tutor account created. Your $10/month subscription is active. Opening your profile..."
+    : "Student account created. Opening your profile...";
   window.setTimeout(() => {
     window.location.href = "profile.html";
   }, 700);
@@ -199,7 +232,13 @@ function renderTags(selector, items, fallback) {
   });
 }
 
+const profileIsTutor = savedProfile?.accountType === "tutor";
+document.querySelector("#profileTutoringPanel")?.classList.toggle("hidden", !profileIsTutor);
+document.querySelector("#premiumTutorPanel")?.classList.toggle("hidden", !profileIsTutor);
+document.querySelector("#profileContactPanel")?.classList.toggle("hidden", !profileIsTutor);
+
 if (savedProfile) {
+  const isTutor = savedProfile.accountType === "tutor";
   const name = savedProfile.name || "Study Mesh Student";
   const grade = savedProfile.grade || "Student";
   const availability = savedProfile.availability || "Availability not set";
@@ -208,13 +247,35 @@ if (savedProfile) {
 
   setText("#profileInitial", name.charAt(0).toUpperCase());
   setText("#profileName", name);
-  setText("#profileBio", `${grade} learner. ${savedProfile.bio || "Ready to learn and tutor with Study Mesh."}`);
+  setText("#profileAccountType", isTutor ? "Tutor profile" : "Student profile");
+  setText("#profileBio", `${grade} ${isTutor ? "tutor" : "learner"}. ${savedProfile.bio || "Ready to learn with Study Mesh."}`);
   setText("#profileOffer", `${name} can tutor ${tutoring}. Available: ${availability}.`);
   setText("#profileContact", `Contact ${name} for tutoring history, study projects, and peer mentor experience.`);
   setText("#profileLinkedinText", linkedin.replace(/^https?:\/\//, ""));
 
   renderList("#profileGoals", savedProfile.goals, ["Add learning goals from the sign up page"]);
   renderTags("#profileTags", savedProfile.tutoring, ["Peer mentor"]);
+
+  document.querySelector("#profileTutoringPanel")?.classList.toggle("hidden", !isTutor);
+  const premiumPanel = document.querySelector("#premiumTutorPanel");
+  premiumPanel?.classList.toggle("hidden", !isTutor);
+  document.querySelector("#profileContactPanel")?.classList.toggle("hidden", !isTutor);
+  if (isTutor) {
+    const fiveStarRatings = Number(savedProfile.fiveStarRatings) || 0;
+    const isPremium = Boolean(savedProfile.premiumTutor);
+    const eligible = fiveStarRatings >= 10;
+    const status = document.querySelector("#premiumTutorStatus");
+    const upgradeButton = document.querySelector("#upgradePremiumButton");
+    if (status) {
+      status.textContent = isPremium
+        ? "Premium tutor is active. Your profile is prioritised in tutor recommendations."
+        : `${fiveStarRatings} of 10 five-star ratings earned. ${eligible ? "You can upgrade now." : "Earn 10 five-star ratings to unlock the upgrade."}`;
+    }
+    if (upgradeButton) {
+      upgradeButton.disabled = !eligible || isPremium;
+      upgradeButton.textContent = isPremium ? "Premium tutor active" : "Upgrade for $20/month";
+    }
+  }
 
   const linkedinButton = document.querySelector("#profileLinkedinButton");
   const linkedinCard = document.querySelector("#profileLinkedinCard");
@@ -226,6 +287,8 @@ const editProfileButton = document.querySelector("#editProfileButton");
 const profileEditPanel = document.querySelector("#profileEditPanel");
 const profileEditForm = document.querySelector("#profileEditForm");
 const profileEditMessage = document.querySelector("#profileEditMessage");
+const upgradePremiumButton = document.querySelector("#upgradePremiumButton");
+const premiumTutorMessage = document.querySelector("#premiumTutorMessage");
 
 function fillProfileEditForm(profile) {
   if (!profileEditForm) return;
@@ -248,6 +311,7 @@ editProfileButton?.addEventListener("click", () => {
 profileEditForm?.addEventListener("submit", (event) => {
   event.preventDefault();
   const updatedProfile = {
+    accountType: savedProfile?.accountType || "student",
     name: document.querySelector("#editName").value.trim(),
     grade: document.querySelector("#editGrade").value.trim(),
     email: document.querySelector("#editEmail").value.trim(),
@@ -255,10 +319,21 @@ profileEditForm?.addEventListener("submit", (event) => {
     goals: splitList(document.querySelector("#editGoals").value),
     tutoring: splitList(document.querySelector("#editTutoring").value),
     availability: document.querySelector("#editAvailability").value.trim(),
-    linkedin: document.querySelector("#editLinkedin").value.trim()
+    linkedin: document.querySelector("#editLinkedin").value.trim(),
+    fiveStarRatings: savedProfile?.fiveStarRatings || 0,
+    premiumTutor: savedProfile?.premiumTutor || false
   };
   localStorage.setItem("studyMeshProfile", JSON.stringify(updatedProfile));
   profileEditMessage.textContent = "Profile details saved.";
+  window.setTimeout(() => window.location.reload(), 500);
+});
+
+upgradePremiumButton?.addEventListener("click", () => {
+  const profile = JSON.parse(localStorage.getItem("studyMeshProfile") || "null");
+  if (!profile || profile.accountType !== "tutor" || (Number(profile.fiveStarRatings) || 0) < 10) return;
+  profile.premiumTutor = true;
+  localStorage.setItem("studyMeshProfile", JSON.stringify(profile));
+  if (premiumTutorMessage) premiumTutorMessage.textContent = "Premium tutor upgrade is active at $20/month.";
   window.setTimeout(() => window.location.reload(), 500);
 });
 

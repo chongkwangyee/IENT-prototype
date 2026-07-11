@@ -12,7 +12,7 @@
 <body>
   <header class="app-header">
     <a class="brand" href="index.html">
-      <span class="brand-mark">SM</span>
+      <span class="brand-mark" aria-hidden="true"></span>
       <span>Study Mesh</span>
     </a>
     <nav class="nav-links" aria-label="Main navigation">
@@ -39,56 +39,56 @@
         <div class="note-icon note-english">EN</div>
         <h2>PSLE English notes</h2>
         <p>Composition planning, comprehension answering, and oral practice prompts.</p>
-        <div class="price-row"><strong>$3</strong><span>per pack</span></div>
-        <button class="primary-button wide buy-note-button" type="button" data-note="PSLE English notes" data-price="$3">Buy notes</button>
+        <div class="price-row"><strong>$6.00</strong><span>per pack</span></div>
+        <button class="primary-button wide buy-note-button" type="button" data-note="PSLE English notes" data-price="$6.00">Buy notes</button>
       </article>
 
       <article class="note-card panel">
         <div class="note-icon note-math">MA</div>
         <h2>O-Level E-Math notes</h2>
         <p>Algebra, geometry, trigonometry, worked examples, and common mistakes.</p>
-        <div class="price-row"><strong>$3</strong><span>per pack</span></div>
-        <button class="primary-button wide buy-note-button" type="button" data-note="O-Level E-Math notes" data-price="$3">Buy notes</button>
+        <div class="price-row"><strong>$10.50</strong><span>per pack</span></div>
+        <button class="primary-button wide buy-note-button" type="button" data-note="O-Level E-Math notes" data-price="$10.50">Buy notes</button>
       </article>
 
       <article class="note-card panel">
         <div class="note-icon note-chinese">CH</div>
         <h2>Chinese oral notes</h2>
         <p>Conversation phrases, reading tips, picture discussion, and vocabulary lists.</p>
-        <div class="price-row"><strong>$3</strong><span>per pack</span></div>
-        <button class="primary-button wide buy-note-button" type="button" data-note="Chinese oral notes" data-price="$3">Buy notes</button>
+        <div class="price-row"><strong>$10.50</strong><span>per pack</span></div>
+        <button class="primary-button wide buy-note-button" type="button" data-note="Chinese oral notes" data-price="$10.50">Buy notes</button>
       </article>
 
       <article class="note-card panel">
         <div class="note-icon note-science">SC</div>
         <h2>O-Level Science notes</h2>
         <p>Biology diagrams, chemistry equations, physics concepts, and practical tips.</p>
-        <div class="price-row"><strong>$3</strong><span>per pack</span></div>
-        <button class="primary-button wide buy-note-button" type="button" data-note="O-Level Science notes" data-price="$3">Buy notes</button>
+        <div class="price-row"><strong>$10.50</strong><span>per pack</span></div>
+        <button class="primary-button wide buy-note-button" type="button" data-note="O-Level Science notes" data-price="$10.50">Buy notes</button>
       </article>
 
       <article class="note-card panel">
         <div class="note-icon note-math">JC</div>
         <h2>JC H2 Math notes</h2>
         <p>Calculus, vectors, statistics, exam strategies, and formula summaries.</p>
-        <div class="price-row"><strong>$3</strong><span>per pack</span></div>
-        <button class="primary-button wide buy-note-button" type="button" data-note="JC H2 Math notes" data-price="$3">Buy notes</button>
+        <div class="price-row"><strong>$18.40</strong><span>per pack</span></div>
+        <button class="primary-button wide buy-note-button" type="button" data-note="JC H2 Math notes" data-price="$18.40">Buy notes</button>
       </article>
 
       <article class="note-card panel">
         <div class="note-icon note-science">PY</div>
         <h2>Polytechnic module notes</h2>
         <p>Programming basics, engineering math, business stats, and project templates.</p>
-        <div class="price-row"><strong>$3</strong><span>per pack</span></div>
-        <button class="primary-button wide buy-note-button" type="button" data-note="Polytechnic module notes" data-price="$3">Buy notes</button>
+        <div class="price-row"><strong>$18.40</strong><span>per pack</span></div>
+        <button class="primary-button wide buy-note-button" type="button" data-note="Polytechnic module notes" data-price="$18.40">Buy notes</button>
       </article>
 
       <article class="note-card panel">
         <div class="note-icon note-english">UN</div>
         <h2>University foundation notes</h2>
         <p>Academic writing, introductory statistics, coding, and revision checklists.</p>
-        <div class="price-row"><strong>$3</strong><span>per pack</span></div>
-        <button class="primary-button wide buy-note-button" type="button" data-note="University foundation notes" data-price="$3">Buy notes</button>
+        <div class="price-row"><strong>$32.20</strong><span>per pack</span></div>
+        <button class="primary-button wide buy-note-button" type="button" data-note="University foundation notes" data-price="$32.20">Buy notes</button>
       </article>
     </section>
   </main>
@@ -100,9 +100,10 @@
       <h2 id="paymentTitle">Choose payment method</h2>
       <p id="paymentSummary">Select a method to buy these notes.</p>
       <div class="payment-options">
+        <button type="button" data-method="Credit / debit card">Credit / debit card</button>
+        <button type="button" data-method="Apple Pay">Apple Pay</button>
+        <button type="button" data-method="Google Pay">Google Pay</button>
         <button type="button" data-method="PayNow">PayNow</button>
-        <button type="button" data-method="PayLah">PayLah</button>
-        <button type="button" data-method="Bank transfer">Bank transfer</button>
       </div>
       <p class="form-message" id="paymentMessage" role="status"></p>
     </div>

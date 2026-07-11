@@ -65,10 +65,12 @@ textarea {
   place-items: center;
   width: 2.45rem;
   height: 2.45rem;
-  color: #fff;
-  font-size: 0.85rem;
   border-radius: 0.55rem;
-  background: linear-gradient(135deg, var(--blue), var(--green));
+  background-color: #071a38;
+  background-image: url("Logo.jpeg");
+  background-repeat: no-repeat;
+  background-position: center 30%;
+  background-size: 225%;
 }
 
 .nav-links {
@@ -888,6 +890,64 @@ legend {
   gap: 0.85rem;
 }
 
+.account-type-fieldset {
+  padding: 0;
+  border: 0;
+}
+
+.account-type-fieldset legend {
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+}
+
+.account-type-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.account-type-option {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  cursor: pointer;
+}
+
+.account-type-option.selected {
+  border-color: #9db7ff;
+  background: #edf4ff;
+}
+
+.account-type-option input {
+  width: auto;
+  margin-top: 0.15rem;
+}
+
+.account-type-option span,
+.account-type-option small {
+  display: block;
+}
+
+.account-type-option small {
+  margin-top: 0.25rem;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.premium-status {
+  margin: 0.85rem 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.primary-button:disabled {
+  color: #8090a3;
+  background: #dbe3ec;
+  cursor: not-allowed;
+}
+
 .auth-card p {
   color: var(--muted);
 }
@@ -1006,6 +1066,10 @@ legend {
   .notes-grid,
   .about-grid,
   .public-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .account-type-options {
     grid-template-columns: 1fr;
   }
 

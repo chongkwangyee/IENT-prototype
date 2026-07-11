@@ -12,7 +12,7 @@
 <body>
   <header class="app-header">
     <a class="brand" href="index.html">
-      <span class="brand-mark">SM</span>
+      <span class="brand-mark" aria-hidden="true"></span>
       <span>Study Mesh</span>
     </a>
     <nav class="nav-links" aria-label="Main navigation">
@@ -28,7 +28,7 @@
     <section class="profile-header">
       <div class="avatar avatar-blue large-avatar" id="profileInitial">A</div>
       <div>
-        <p class="eyebrow">Student profile</p>
+        <p class="eyebrow" id="profileAccountType">Student profile</p>
         <h1 id="profileName">Alex Rivera</h1>
         <p id="profileBio">Junior College learner, algebra tutor, and weekend study group host.</p>
       </div>
@@ -49,7 +49,7 @@
         </ul>
       </article>
 
-      <article class="panel">
+      <article class="panel" id="profileTutoringPanel">
         <h2>Tutoring offer</h2>
         <p class="body-copy" id="profileOffer">Alex can tutor Lower Secondary Mathematics, E-Math, and beginner HTML. Available Monday, Wednesday, and Saturday.</p>
         <div class="tag-row" id="profileTags">
@@ -57,6 +57,15 @@
           <span>HTML</span>
           <span>Peer mentor</span>
         </div>
+      </article>
+
+      <article class="panel tutor-only-panel hidden" id="premiumTutorPanel">
+        <p class="eyebrow">Tutor subscription</p>
+        <h2>Premium tutor</h2>
+        <p class="body-copy">Premium tutors are placed more prominently in the recommended tutors section, helping suitable students discover their profile first.</p>
+        <p class="premium-status" id="premiumTutorStatus"></p>
+        <button class="primary-button" id="upgradePremiumButton" type="button">Upgrade for $20/month</button>
+        <p class="form-message" id="premiumTutorMessage" role="status"></p>
       </article>
 
       <article class="panel stats-card">
@@ -79,7 +88,7 @@
         </div>
       </article>
 
-      <article class="panel">
+      <article class="panel" id="profileContactPanel">
         <h2>Contact links</h2>
         <p class="body-copy" id="profileContact">Connect for tutoring history, study projects, and peer mentor experience.</p>
         <a class="link-card" id="profileLinkedinCard" href="https://www.linkedin.com/in/alex-rivera-study-mesh" target="_blank" rel="noopener">

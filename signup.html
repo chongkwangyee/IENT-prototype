@@ -13,7 +13,7 @@
   <main class="auth-layout signup-layout">
     <section class="auth-intro">
       <a class="brand" href="index.html">
-        <span class="brand-mark">SM</span>
+        <span class="brand-mark" aria-hidden="true"></span>
         <span>Study Mesh</span>
       </a>
       <nav class="auth-nav" aria-label="Quick navigation">
@@ -32,9 +32,22 @@
     </section>
 
     <section class="auth-card signup-card" aria-labelledby="signupTitle">
-      <h2 id="signupTitle">Sign up</h2>
-      <p>Fill in your student details. They will appear on your profile page.</p>
+      <h2 id="signupTitle">Create your account</h2>
+      <p>Choose a student or tutor account. Tutor accounts include a $10/month subscription.</p>
       <form id="signupForm">
+        <fieldset class="account-type-fieldset">
+          <legend>Account type</legend>
+          <div class="account-type-options">
+            <label class="account-type-option selected">
+              <input type="radio" name="accountType" value="student" checked>
+              <span><strong>Student account</strong><small>Find tutors, book sessions, and buy notes.</small></span>
+            </label>
+            <label class="account-type-option">
+              <input type="radio" name="accountType" value="tutor">
+              <span><strong>Tutor account</strong><small>$10/month to list your tutoring offer and accept bookings.</small></span>
+            </label>
+          </div>
+        </fieldset>
         <div class="form-grid">
           <label>
             Full name
@@ -65,14 +78,17 @@
 
         <label>
           Short bio
-          <textarea id="signupBio" rows="3" placeholder="Example: I want help with O-Level Chemistry and can tutor Primary Math." required></textarea>
+          <textarea id="signupBio" rows="3" placeholder="Example: I want help with O-Level Chemistry." required></textarea>
         </label>
 
-        <div class="form-grid">
+        <div id="studentFields">
           <label>
             Learning goals
             <input id="signupGoals" type="text" placeholder="PSLE Science, O-Level E-Math, H2 Chemistry">
           </label>
+        </div>
+
+        <div class="form-grid tutor-signup-fields hidden" id="tutorFields">
           <label>
             Can tutor
             <input id="signupTutoring" type="text" placeholder="Primary Math, Chinese oral, beginner HTML">
@@ -90,7 +106,12 @@
           </label>
         </div>
 
-        <button class="primary-button wide" type="submit">Create profile</button>
+        <label class="check-label tutor-signup-fields hidden" id="tutorSubscriptionField">
+          <input id="signupTutorSubscription" type="checkbox">
+          I understand my tutor account will be billed $10/month.
+        </label>
+
+        <button class="primary-button wide" id="signupSubmitButton" type="submit">Create student account</button>
       </form>
       <div class="switch-note">
         Already have an account? <a href="login.html">Log in</a>
