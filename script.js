@@ -257,7 +257,7 @@ loginForm?.addEventListener("submit", async (event) => {
       const data = await response.json();
       localStorage.setItem("studyMeshToken", data.token);
       localStorage.setItem("studyMeshLoggedIn", "true");
-      localStorage.setItem("studyMeshProfile", JSON.stringify(registeredUser.profile));
+      localStorage.setItem("studyMeshProfile", JSON.stringify(data.profile));
       
       loginMessage.textContent = "Logged in successfully. Redirecting...";
       const next = new URLSearchParams(window.location.search).get("next") || "profile.html";
@@ -315,12 +315,12 @@ signupForm?.addEventListener("submit", async (event) => {
       const data = await response.json();
       localStorage.setItem("studyMeshToken", data.token);
       localStorage.setItem("studyMeshLoggedIn", "true");
-      localStorage.setItem("studyMeshProfile", JSON.stringify(profile));
+      localStorage.setItem("studyMeshProfile", JSON.stringify(data.profile));
 
       const users = JSON.parse(localStorage.getItem("studyMeshUsers") || "{}");
       users[email] = {
         hash: data.hash,
-        profile: profile
+        profile: data.profile
       };
       localStorage.setItem("studyMeshUsers", JSON.stringify(users));
 
@@ -390,6 +390,33 @@ function renderProfilePage() {
   const linkedinCard = document.querySelector("#profileLinkedinCard");
   if (linkedinButton) linkedinButton.href = linkedin;
   if (linkedinCard) linkedinCard.href = linkedin;
+
+  // Render stats
+  const sessionsCount = profile.sessionsCount !== undefined ? profile.sessionsCount : 0;
+  const rating = profile.rating !== undefined ? profile.rating : 0;
+  const points = profile.points !== undefined ? profile.points : 0;
+  const badgesCount = profile.badgesCount !== undefined ? profile.badgesCount : 0;
+
+  setText("#statSessions", sessionsCount);
+  setText("#statRating", rating === 0 ? "0" : rating.toFixed(1));
+  setText("#statPoints", points);
+  setText("#statBadges", badgesCount);
+
+  // Render badges list
+  const badgeRow = document.querySelector("#profileBadges");
+  if (badgeRow) {
+    badgeRow.innerHTML = "";
+    const badges = profile.badges || [];
+    if (badges.length === 0) {
+      badgeRow.innerHTML = '<span class="no-badges" style="color: var(--text-muted); font-size: 0.9rem;">No badges earned yet</span>';
+    } else {
+      badges.forEach((badge) => {
+        const span = document.createElement("span");
+        span.textContent = badge;
+        badgeRow.appendChild(span);
+      });
+    }
+  }
 }
 
 if (currentPage === "profile.html" && savedProfile) {
@@ -453,13 +480,13 @@ profileEditForm?.addEventListener("submit", async (event) => {
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem("studyMeshToken", data.token);
-      localStorage.setItem("studyMeshProfile", JSON.stringify(updatedProfile));
+      localStorage.setItem("studyMeshProfile", JSON.stringify(data.profile));
 
       // Update mock database in localStorage
-      const email = updatedProfile.email.toLowerCase();
+      const email = data.profile.email.toLowerCase();
       const users = JSON.parse(localStorage.getItem("studyMeshUsers") || "{}");
       if (users[email]) {
-        users[email].profile = updatedProfile;
+        users[email].profile = data.profile;
         localStorage.setItem("studyMeshUsers", JSON.stringify(users));
       }
 
