@@ -18,24 +18,27 @@ module.exports = async (req, res) => {
       return res.status(401).json({ error: 'Invalid password' });
     }
 
+    const payload = {
+      email: profile.email.toLowerCase(),
+      name: profile.name,
+      grade: profile.grade,
+      bio: profile.bio,
+      goals: profile.goals,
+      tutoring: profile.tutoring,
+      availability: profile.availability,
+      linkedin: profile.linkedin,
+      sessionsCount: profile.sessionsCount !== undefined ? profile.sessionsCount : 0,
+      rating: profile.rating !== undefined ? profile.rating : 0,
+      points: profile.points !== undefined ? profile.points : 0,
+      badgesCount: profile.badgesCount !== undefined ? profile.badgesCount : 0,
+      badges: profile.badges || []
+    };
+
     // Sign JWT
     const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_study_mesh_2026';
-    const token = jwt.sign(
-      {
-        email: profile.email.toLowerCase(),
-        name: profile.name,
-        grade: profile.grade,
-        bio: profile.bio,
-        goals: profile.goals,
-        tutoring: profile.tutoring,
-        availability: profile.availability,
-        linkedin: profile.linkedin
-      },
-      JWT_SECRET,
-      { expiresIn: '7d' }
-    );
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
 
-    return res.status(200).json({ token });
+    return res.status(200).json({ token, profile: payload });
   } catch (error) {
     console.error('Login API error:', error);
     return res.status(500).json({ error: 'Internal server error' });

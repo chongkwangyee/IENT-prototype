@@ -31,23 +31,26 @@ module.exports = (req, res) => {
       return res.status(403).json({ error: 'Forbidden: You can only update your own profile' });
     }
 
-    // Sign new JWT
-    const newToken = jwt.sign(
-      {
-        email: profile.email.toLowerCase(),
-        name: profile.name,
-        grade: profile.grade,
-        bio: profile.bio,
-        goals: profile.goals,
-        tutoring: profile.tutoring,
-        availability: profile.availability,
-        linkedin: profile.linkedin
-      },
-      JWT_SECRET,
-      { expiresIn: '7d' }
-    );
+    const payload = {
+      email: profile.email.toLowerCase(),
+      name: profile.name,
+      grade: profile.grade,
+      bio: profile.bio,
+      goals: profile.goals,
+      tutoring: profile.tutoring,
+      availability: profile.availability,
+      linkedin: profile.linkedin,
+      sessionsCount: decoded.sessionsCount !== undefined ? decoded.sessionsCount : 0,
+      rating: decoded.rating !== undefined ? decoded.rating : 0,
+      points: decoded.points !== undefined ? decoded.points : 0,
+      badgesCount: decoded.badgesCount !== undefined ? decoded.badgesCount : 0,
+      badges: decoded.badges || []
+    };
 
-    return res.status(200).json({ token: newToken });
+    // Sign new JWT
+    const newToken = jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
+
+    return res.status(200).json({ token: newToken, profile: payload });
   } catch (error) {
     console.error('Update profile API error:', error);
     return res.status(500).json({ error: 'Internal server error' });
