@@ -48,6 +48,28 @@ function updateLoginLinks() {
   });
 }
 
+function updateLoggedInUI() {
+  if (!isLoggedIn) return;
+
+  // Update Hero actions (Sign up / Log in buttons) on homepage
+  const heroActions = document.querySelector(".hero-actions");
+  if (heroActions) {
+    heroActions.innerHTML = `
+      <a class="primary-button" href="profile.html">Go to Profile</a>
+      <a class="secondary-button light-button" href="sessions.html">Track Sessions</a>
+    `;
+  }
+
+  // Update tutor preview texts on homepage
+  const tutorPreviewEyebrow = document.querySelector("#tutorPreviewEyebrow");
+  const tutorPreviewTitle = document.querySelector("#tutorPreviewTitle");
+  const tutorPreviewSubtitle = document.querySelector("#tutorPreviewSubtitle");
+
+  if (tutorPreviewEyebrow) tutorPreviewEyebrow.textContent = "Tutor directory";
+  if (tutorPreviewTitle) tutorPreviewTitle.textContent = "Book a session with a peer tutor";
+  if (tutorPreviewSubtitle) tutorPreviewSubtitle.textContent = "Select a tutor below to book a session.";
+}
+
 async function checkSession() {
   if (studyMeshToken) {
     try {
@@ -64,6 +86,7 @@ async function checkSession() {
         isLoggedIn = true;
         savedProfile = data.profile;
         updateLoginLinks();
+        updateLoggedInUI();
         if (currentPage === "profile.html") {
           renderProfilePage();
         }
@@ -90,6 +113,7 @@ if (protectedPages.includes(currentPage) && !studyMeshToken) {
 }
 
 updateLoginLinks();
+updateLoggedInUI();
 
 document.querySelectorAll('a[href^="booking.html"]').forEach((link) => {
   link.addEventListener("click", (event) => {
@@ -138,7 +162,7 @@ if (tutorSelect) {
   const tutorName = new URLSearchParams(window.location.search).get("tutor");
   if (tutorName) {
     [...tutorSelect.options].forEach((option) => {
-      option.selected = option.value === tutorName;
+      option.selected = option.value === tutorName || option.text === tutorName;
     });
   }
 }
