@@ -4,32 +4,96 @@ const searchInput = document.querySelector("#searchInput");
 const levelSelect = document.querySelector("#levelSelect");
 const protectedPages = ["booking.html", "notes.html", "profile.html", "sessions.html"];
 const currentPage = window.location.pathname.split("/").pop() || "index.html";
-const isLoggedIn = localStorage.getItem("studyMeshLoggedIn") === "true";
-const savedProfile = JSON.parse(localStorage.getItem("studyMeshProfile") || "null");
+
+// Session state variables
+let isLoggedIn = localStorage.getItem("studyMeshLoggedIn") === "true";
+let savedProfile = JSON.parse(localStorage.getItem("studyMeshProfile") || "null");
+const studyMeshToken = localStorage.getItem("studyMeshToken");
 
 function goToLogin() {
   const next = encodeURIComponent(`${currentPage}${window.location.search}`);
   window.location.href = `login.html?next=${next}`;
 }
 
-if (protectedPages.includes(currentPage) && !isLoggedIn) {
-  goToLogin();
+function handleLogout() {
+  localStorage.setItem("studyMeshLoggedIn", "false");
+  localStorage.removeItem("studyMeshToken");
+  localStorage.removeItem("studyMeshProfile");
+  isLoggedIn = false;
+  savedProfile = null;
+  if (protectedPages.includes(currentPage)) {
+    goToLogin();
+  } else {
+    window.location.href = "index.html";
+  }
 }
 
-document.querySelectorAll(".login-link").forEach((link) => {
-  if (!isLoggedIn) return;
-  link.textContent = "Log out";
-  link.href = "#";
-  link.addEventListener("click", (event) => {
-    event.preventDefault();
-    localStorage.setItem("studyMeshLoggedIn", "false");
-    window.location.href = "index.html";
+function updateLoginLinks() {
+  document.querySelectorAll(".login-link").forEach((link) => {
+    if (!isLoggedIn) {
+      link.textContent = "Log in";
+      link.href = "login.html";
+      return;
+    }
+    link.textContent = "Log out";
+    link.href = "#";
+    // Avoid multiple listeners
+    if (!link.dataset.hasLogoutListener) {
+      link.dataset.hasLogoutListener = "true";
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        handleLogout();
+      });
+    }
   });
-});
+}
+
+async function checkSession() {
+  if (studyMeshToken) {
+    try {
+      const response = await fetch("/api/verify", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${studyMeshToken}`
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("studyMeshLoggedIn", "true");
+        localStorage.setItem("studyMeshProfile", JSON.stringify(data.profile));
+        isLoggedIn = true;
+        savedProfile = data.profile;
+        updateLoginLinks();
+        if (currentPage === "profile.html") {
+          renderProfilePage();
+        }
+      } else {
+        handleLogout();
+      }
+    } catch (error) {
+      console.error("Session verification failed:", error);
+    }
+  } else {
+    if (isLoggedIn) {
+      handleLogout();
+    } else if (protectedPages.includes(currentPage)) {
+      goToLogin();
+    }
+  }
+}
+
+// Initial session check
+if (protectedPages.includes(currentPage) && !studyMeshToken) {
+  goToLogin();
+} else {
+  checkSession();
+}
+
+updateLoginLinks();
 
 document.querySelectorAll('a[href^="booking.html"]').forEach((link) => {
   link.addEventListener("click", (event) => {
-    if (isLoggedIn) return;
+    if (isLoggedIn || studyMeshToken) return;
     event.preventDefault();
     const next = encodeURIComponent(link.getAttribute("href"));
     window.location.href = `login.html?next=${next}`;
@@ -130,14 +194,60 @@ if (sessionTracker) {
 const loginForm = document.querySelector("#loginForm");
 const loginMessage = document.querySelector("#loginMessage");
 
-loginForm?.addEventListener("submit", (event) => {
+loginForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
-  localStorage.setItem("studyMeshLoggedIn", "true");
-  loginMessage.textContent = "Logged in for the demo. Redirecting...";
-  const next = new URLSearchParams(window.location.search).get("next") || "profile.html";
-  window.setTimeout(() => {
-    window.location.href = next;
-  }, 800);
+  loginMessage.textContent = "Logging in...";
+  
+  const emailInput = loginForm.querySelector('input[type="email"]');
+  const passwordInput = loginForm.querySelector('input[type="password"]');
+  const email = emailInput?.value.trim().toLowerCase();
+  const password = passwordInput?.value;
+
+  if (!email || !password) {
+    loginMessage.textContent = "Please fill in all fields.";
+    return;
+  }
+
+  const users = JSON.parse(localStorage.getItem("studyMeshUsers") || "{}");
+  const registeredUser = users[email];
+
+  if (!registeredUser) {
+    loginMessage.textContent = "No account found with this email. Please sign up.";
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        password,
+        hash: registeredUser.hash,
+        profile: registeredUser.profile
+      })
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("studyMeshToken", data.token);
+      localStorage.setItem("studyMeshLoggedIn", "true");
+      localStorage.setItem("studyMeshProfile", JSON.stringify(registeredUser.profile));
+      
+      loginMessage.textContent = "Logged in successfully. Redirecting...";
+      const next = new URLSearchParams(window.location.search).get("next") || "profile.html";
+      window.setTimeout(() => {
+        window.location.href = next;
+      }, 800);
+    } else {
+      const data = await response.json();
+      loginMessage.textContent = data.error || "Login failed. Check your password.";
+    }
+  } catch (error) {
+    console.error("Login request failed:", error);
+    loginMessage.textContent = "Server error. Please try again.";
+  }
 });
 
 const signupForm = document.querySelector("#signupForm");
@@ -150,24 +260,58 @@ function splitList(value) {
     .filter(Boolean);
 }
 
-signupForm?.addEventListener("submit", (event) => {
+signupForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
+  signupMessage.textContent = "Creating profile...";
+
+  const email = document.querySelector("#signupEmail").value.trim().toLowerCase();
+  const password = document.querySelector("#signupPassword").value;
+
   const profile = {
     name: document.querySelector("#signupName").value.trim(),
     grade: document.querySelector("#signupGrade").value.trim(),
-    email: document.querySelector("#signupEmail").value.trim(),
+    email: email,
     bio: document.querySelector("#signupBio").value.trim(),
     goals: splitList(document.querySelector("#signupGoals").value),
     tutoring: splitList(document.querySelector("#signupTutoring").value),
     availability: document.querySelector("#signupAvailability").value.trim(),
     linkedin: document.querySelector("#signupLinkedin").value.trim()
   };
-  localStorage.setItem("studyMeshProfile", JSON.stringify(profile));
-  localStorage.setItem("studyMeshLoggedIn", "true");
-  signupMessage.textContent = "Profile created. Opening your profile...";
-  window.setTimeout(() => {
-    window.location.href = "profile.html";
-  }, 700);
+
+  try {
+    const response = await fetch("/api/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ password, profile })
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("studyMeshToken", data.token);
+      localStorage.setItem("studyMeshLoggedIn", "true");
+      localStorage.setItem("studyMeshProfile", JSON.stringify(profile));
+
+      const users = JSON.parse(localStorage.getItem("studyMeshUsers") || "{}");
+      users[email] = {
+        hash: data.hash,
+        profile: profile
+      };
+      localStorage.setItem("studyMeshUsers", JSON.stringify(users));
+
+      signupMessage.textContent = "Profile created successfully. Opening your profile...";
+      window.setTimeout(() => {
+        window.location.href = "profile.html";
+      }, 700);
+    } else {
+      const data = await response.json();
+      signupMessage.textContent = data.error || "Failed to create profile.";
+    }
+  } catch (error) {
+    console.error("Signup request failed:", error);
+    signupMessage.textContent = "Server error. Please try again.";
+  }
 });
 
 function setText(selector, value) {
@@ -199,27 +343,33 @@ function renderTags(selector, items, fallback) {
   });
 }
 
-if (savedProfile) {
-  const name = savedProfile.name || "Study Mesh Student";
-  const grade = savedProfile.grade || "Student";
-  const availability = savedProfile.availability || "Availability not set";
-  const tutoring = savedProfile.tutoring?.length ? savedProfile.tutoring.join(", ") : "Peer tutoring";
-  const linkedin = savedProfile.linkedin || "https://www.linkedin.com";
+function renderProfilePage() {
+  const profile = JSON.parse(localStorage.getItem("studyMeshProfile") || "null");
+  if (!profile) return;
+  const name = profile.name || "Study Mesh Student";
+  const grade = profile.grade || "Student";
+  const availability = profile.availability || "Availability not set";
+  const tutoring = profile.tutoring?.length ? profile.tutoring.join(", ") : "Peer tutoring";
+  const linkedin = profile.linkedin || "https://www.linkedin.com";
 
   setText("#profileInitial", name.charAt(0).toUpperCase());
   setText("#profileName", name);
-  setText("#profileBio", `${grade} learner. ${savedProfile.bio || "Ready to learn and tutor with Study Mesh."}`);
+  setText("#profileBio", `${grade} learner. ${profile.bio || "Ready to learn and tutor with Study Mesh."}`);
   setText("#profileOffer", `${name} can tutor ${tutoring}. Available: ${availability}.`);
   setText("#profileContact", `Contact ${name} for tutoring history, study projects, and peer mentor experience.`);
   setText("#profileLinkedinText", linkedin.replace(/^https?:\/\//, ""));
 
-  renderList("#profileGoals", savedProfile.goals, ["Add learning goals from the sign up page"]);
-  renderTags("#profileTags", savedProfile.tutoring, ["Peer mentor"]);
+  renderList("#profileGoals", profile.goals, ["Add learning goals from the sign up page"]);
+  renderTags("#profileTags", profile.tutoring, ["Peer mentor"]);
 
   const linkedinButton = document.querySelector("#profileLinkedinButton");
   const linkedinCard = document.querySelector("#profileLinkedinCard");
   if (linkedinButton) linkedinButton.href = linkedin;
   if (linkedinCard) linkedinCard.href = linkedin;
+}
+
+if (currentPage === "profile.html" && savedProfile) {
+  renderProfilePage();
 }
 
 const editProfileButton = document.querySelector("#editProfileButton");
@@ -245,8 +395,9 @@ editProfileButton?.addEventListener("click", () => {
   profileEditPanel?.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
-profileEditForm?.addEventListener("submit", (event) => {
+profileEditForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
+  profileEditMessage.textContent = "Saving changes...";
   const updatedProfile = {
     name: document.querySelector("#editName").value.trim(),
     grade: document.querySelector("#editGrade").value.trim(),
@@ -257,9 +408,47 @@ profileEditForm?.addEventListener("submit", (event) => {
     availability: document.querySelector("#editAvailability").value.trim(),
     linkedin: document.querySelector("#editLinkedin").value.trim()
   };
-  localStorage.setItem("studyMeshProfile", JSON.stringify(updatedProfile));
-  profileEditMessage.textContent = "Profile details saved.";
-  window.setTimeout(() => window.location.reload(), 500);
+
+  const token = localStorage.getItem("studyMeshToken");
+  if (!token) {
+    profileEditMessage.textContent = "Error: Session expired. Please log in again.";
+    handleLogout();
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/update-profile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ profile: updatedProfile })
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("studyMeshToken", data.token);
+      localStorage.setItem("studyMeshProfile", JSON.stringify(updatedProfile));
+
+      // Update mock database in localStorage
+      const email = updatedProfile.email.toLowerCase();
+      const users = JSON.parse(localStorage.getItem("studyMeshUsers") || "{}");
+      if (users[email]) {
+        users[email].profile = updatedProfile;
+        localStorage.setItem("studyMeshUsers", JSON.stringify(users));
+      }
+
+      profileEditMessage.textContent = "Profile details saved.";
+      window.setTimeout(() => window.location.reload(), 500);
+    } else {
+      const data = await response.json();
+      profileEditMessage.textContent = data.error || "Failed to update profile details.";
+    }
+  } catch (error) {
+    console.error("Profile edit request failed:", error);
+    profileEditMessage.textContent = "Server error. Please try again.";
+  }
 });
 
 const paymentModal = document.querySelector("#paymentModal");
