@@ -998,12 +998,140 @@ legend {
   display: none !important;
 }
 
+/* ── Bundle section ─────────────────────────────────── */
+.bundle-section {
+  padding: 2.5rem 0 0;
+}
+
+.bundle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.bundle-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 1.4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.bundle-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.25rem 0.6rem;
+  background: var(--blue);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bundle-header {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.bundle-icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+}
+
+.bundle-psle   { background: var(--orange); }
+.bundle-olevel { background: var(--green); }
+.bundle-jcpoly { background: var(--purple); }
+
+.bundle-card h3 {
+  margin: 0 0 0.15rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.bundle-level {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.bundle-includes {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  flex: 1;
+}
+
+.bundle-includes li {
+  padding-left: 1.2rem;
+  position: relative;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.bundle-includes li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+.bundle-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+
+.bundle-original {
+  display: block;
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-decoration: line-through;
+}
+
+.bundle-price {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text);
+}
+
+.bundle-per {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
 @media (max-width: 980px) {
   .workspace,
   .booking-layout,
   .auth-layout,
   .signup-layout,
   .notes-grid,
+  .bundle-grid,
   .about-grid,
   .public-hero {
     grid-template-columns: 1fr;
