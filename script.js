@@ -19,6 +19,7 @@ function handleLogout() {
   localStorage.setItem("studyMeshLoggedIn", "false");
   localStorage.removeItem("studyMeshToken");
   localStorage.removeItem("studyMeshProfile");
+  sessionStorage.removeItem("studyMeshDemo");
   isLoggedIn = false;
   savedProfile = null;
   if (protectedPages.includes(currentPage)) {
@@ -96,6 +97,13 @@ async function checkSession() {
     } catch (error) {
       console.error("Session verification failed:", error);
     }
+  } else if (isDemoMode) {
+    isLoggedIn = true;
+    updateLoginLinks();
+    updateLoggedInUI();
+    if (currentPage === "profile.html") {
+      renderProfilePage();
+    }
   } else {
     if (isLoggedIn) {
       handleLogout();
@@ -106,7 +114,9 @@ async function checkSession() {
 }
 
 // Initial session check
-if (protectedPages.includes(currentPage) && !studyMeshToken) {
+const isDemoMode = sessionStorage.getItem("studyMeshDemo") === "true";
+
+if (protectedPages.includes(currentPage) && !studyMeshToken && !isDemoMode) {
   goToLogin();
 } else {
   checkSession();
@@ -114,6 +124,32 @@ if (protectedPages.includes(currentPage) && !studyMeshToken) {
 
 updateLoginLinks();
 updateLoggedInUI();
+
+// Demo profile link — inject a guest session without a real JWT
+const viewDemoLink = document.querySelector("#viewDemoProfile");
+if (viewDemoLink) {
+  viewDemoLink.addEventListener("click", (event) => {
+    event.preventDefault();
+    const demoProfile = {
+      name: "Alex Rivera",
+      grade: "Junior college",
+      email: "alex@school.edu.sg",
+      bio: "Junior College learner, algebra tutor, and weekend study group host.",
+      goals: ["Improve H2 Mathematics timed practice", "Complete GP essay drills"],
+      tutoring: ["Lower Secondary Mathematics", "E-Math", "beginner HTML"],
+      availability: "Monday, Wednesday, Saturday",
+      linkedin: "https://www.linkedin.com/in/alex-rivera-study-mesh",
+      sessionsCount: 0,
+      rating: 0,
+      points: 0,
+      badgesCount: 0,
+      badges: []
+    };
+    sessionStorage.setItem("studyMeshDemo", "true");
+    localStorage.setItem("studyMeshProfile", JSON.stringify(demoProfile));
+    window.location.href = "profile.html";
+  });
+}
 
 document.querySelectorAll('a[href^="booking.html"]').forEach((link) => {
   link.addEventListener("click", (event) => {
@@ -370,6 +406,19 @@ function renderTags(selector, items, fallback) {
 function renderProfilePage() {
   const profile = JSON.parse(localStorage.getItem("studyMeshProfile") || "null");
   if (!profile) return;
+
+  // Show a banner when browsing as a demo guest
+  if (sessionStorage.getItem("studyMeshDemo") === "true") {
+    const main = document.querySelector("main");
+    if (main && !document.querySelector("#demoBanner")) {
+      const banner = document.createElement("div");
+      banner.id = "demoBanner";
+      banner.style.cssText = "background:#fff8e1;border:1px solid #f0c040;border-radius:0.4rem;padding:0.65rem 1rem;margin-bottom:1rem;font-size:0.88rem;color:#7a4a07;";
+      banner.innerHTML = 'You are viewing a <strong>demo profile</strong>. <a href="signup.html">Sign up</a> or <a href="login.html">log in</a> to see your own profile.';
+      main.prepend(banner);
+    }
+  }
+
   const name = profile.name || "Study Mesh Student";
   const grade = profile.grade || "Student";
   const availability = profile.availability || "Availability not set";
@@ -419,7 +468,7 @@ function renderProfilePage() {
   }
 }
 
-if (currentPage === "profile.html" && savedProfile) {
+if (currentPage === "profile.html" && (savedProfile || isDemoMode)) {
   renderProfilePage();
 }
 
