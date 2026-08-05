@@ -1125,6 +1125,7 @@ legend {
   font-size: 0.78rem;
 }
 
+/* ── Tablet (≤ 980 px) ───────────────────────────────── */
 @media (max-width: 980px) {
   .workspace,
   .booking-layout,
@@ -1137,6 +1138,17 @@ legend {
     grid-template-columns: 1fr;
   }
 
+  /* auth panels stack vertically, hero-intro fills width */
+  .auth-layout,
+  .signup-layout {
+    min-height: auto;
+    padding: 1.5rem 0 2.5rem;
+  }
+
+  .auth-intro {
+    min-height: auto;
+  }
+
   .sidebar {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1147,33 +1159,66 @@ legend {
   }
 
   .hero-visual {
-    min-height: 10rem;
+    display: none; /* hide decorative graphic on tablets */
+  }
+
+  .notes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .tutor-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  /* booking: full-width on tablet */
+  .booking-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* profile grid: 2 cols still fine on tablet */
+  .profile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
+/* ── Mobile (≤ 680 px) ───────────────────────────────── */
 @media (max-width: 680px) {
-  .app-header,
-  .toolbar,
-  .section-heading,
-  .page-title,
-  .profile-header {
-    align-items: stretch;
-    flex-direction: column;
+  /* ── Header & nav ── */
+  .app-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
   }
 
   .nav-links {
     width: 100%;
+    justify-content: center;
+    gap: 0.25rem;
   }
 
   .nav-links a {
-    flex: 1;
+    flex: 1 1 auto;
     text-align: center;
+    padding: 0.55rem 0.5rem;
+    font-size: 0.82rem;
   }
 
+  /* ── Layout helpers ── */
+  .toolbar,
+  .section-heading,
+  .page-title {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .profile-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* ── Grids collapse to 1 column ── */
   .sidebar,
   .tutor-grid,
   .profile-grid,
@@ -1181,28 +1226,120 @@ legend {
   .form-grid,
   .time-grid,
   .tracker-grid,
-  .tracker-card dl {
+  .tracker-card dl,
+  .notes-grid,
+  .bundle-grid {
     grid-template-columns: 1fr;
   }
 
+  /* ── Stats grid: 2×2 on mobile ── */
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* ── Time grid: 2 columns on mobile ── */
+  .time-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* ── Hero ── */
   .hero-strip h1,
+  .page-title h1,
   .auth-intro h1 {
     max-width: none;
-    font-size: 2.4rem;
+    font-size: clamp(1.8rem, 7vw, 2.4rem);
   }
 
+  .hero-strip p:not(.eyebrow),
+  .page-title p,
+  .auth-intro p {
+    max-width: none;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-actions a,
+  .hero-actions button {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* ── Hero image ── */
   .posted-image {
-    max-height: 18rem;
+    max-height: 14rem;
   }
 
+  /* ── Auth panels ── */
   .auth-intro {
+    min-height: auto;
+    padding: 1.5rem;
+  }
+
+  .auth-art {
+    display: none; /* hide decorative art on small screens */
+  }
+
+  /* ── Page shell tighter margins ── */
+  .page-shell,
+  .public-home,
+  .workspace {
+    width: calc(100% - 1.5rem);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ── Bundle price row stacks ── */
+  .bundle-price-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .bundle-price-row .primary-button {
+    width: 100%;
+  }
+
+  /* ── Note card smaller min-height ── */
+  .note-card {
     min-height: auto;
   }
 
-  .auth-intro .brand {
-    margin-bottom: 2rem;
+  /* ── Booking schedule panel ── */
+  .schedule-panel {
+    display: none; /* collapsible on mobile — hidden by default */
   }
 
-  .auth-art div:nth-child(2) { left: 4rem; }
-  .auth-art div:nth-child(3) { left: 8rem; }
+  /* ── Profile header avatar + name inline ── */
+  .profile-header {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+/* ── Small phone (≤ 420 px) ─────────────────────────── */
+@media (max-width: 420px) {
+  .nav-links a {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.76rem;
+  }
+
+  /* login-link pill still stands out */
+  .nav-links .login-link {
+    flex: 0 0 auto;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .auth-card {
+    padding: 1rem;
+  }
+
+  .tracker-card dl {
+    grid-template-columns: 1fr;
+  }
 }
