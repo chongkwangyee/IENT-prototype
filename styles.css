@@ -1020,9 +1020,9 @@ legend {
 }
 
 .bundle-badge {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
+  margin-left: auto;
+  align-self: flex-start;
+  flex-shrink: 0;
   padding: 0.25rem 0.6rem;
   background: var(--blue);
   color: #fff;
